@@ -1,5 +1,7 @@
 package crud;
 
+import java.util.Objects;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -14,36 +16,41 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-    private Rectangle2D getVisualBounds(){
-      return Screen.getPrimary().getVisualBounds();
-    }
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/Login.fxml"));
+  private static Injector injector;
 
-        Injector injector = Guice.createInjector(new AppModule());
+  public static void setInjector(Injector injector) {
+    MainApp.injector = Objects.requireNonNull(injector);
+  }
 
-        loader
-          .setControllerFactory(
-            param->
-             injector.getInstance(LoginController.class)
-            );
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/Login.fxml"));
 
+    loader
+        .setControllerFactory(
+            param -> injector.getInstance(LoginController.class));
 
-        Parent root = loader.load();
-        var bounds = this.getVisualBounds();
+    Parent root = loader.load();
+    var bounds = this.getVisualBounds();
 
-        double windowWidth = bounds.getWidth() * 0.8;
-        double windowHeight = bounds.getHeight() * 0.8;
+    double windowWidth = bounds.getWidth() * 0.8;
+    double windowHeight = bounds.getHeight() * 0.8;
 
-        Scene scene = new Scene(root, windowWidth, windowHeight);
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-    }
+    Scene scene = new Scene(root, windowWidth, windowHeight);
+    primaryStage.setTitle("Login");
+    primaryStage.setScene(scene);
+    primaryStage.setMaximized(true);
+    primaryStage.show();
+  }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-}
+  private Rectangle2D getVisualBounds() {
+    return Screen.getPrimary().getVisualBounds();
+  }
+
+  public static void main(String[] args) {
+    Injector injector = Guice.createInjector(new AppModule());
+
+    setInjector(injector);
+    launch(args);
+  }
+};
