@@ -15,27 +15,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 @Singleton
 public class LoginController {
   private static final Logger logger = Logger.getLogger(LoginController.class.getName());
-
-  protected static TextFormatter.Change defaultValidateUsernameChange(TextFormatter.Change change) {
-    if (change.getControlNewText().length() > 10) {
-      return null;
-    }
-    return change;
-  }
-
-  protected static TextFormatter.Change defaultValidatePasswordChange(TextFormatter.Change change) {
-    if (change.getControlNewText().length() > 15) {
-      return null;
-    }
-    return change;
-  }
 
   private ILoginService service;
 
@@ -49,10 +34,9 @@ public class LoginController {
   private Button loginButton;
 
   private final StringProperty username = new SimpleStringProperty();
+
   private final StringProperty password = new SimpleStringProperty();
 
-  private TextFormatter<String> userNameFormatter = new TextFormatter<>(LoginController::defaultValidateUsernameChange);
-  private TextFormatter<String> passwordFormatter = new TextFormatter<>(LoginController::defaultValidatePasswordChange);
 
   @Inject
   public LoginController(ILoginService service) {
@@ -67,8 +51,8 @@ public class LoginController {
     username.bind(usernameField.textProperty());
     password.bind(passwordField.textProperty());
 
-    usernameField.setTextFormatter(this.userNameFormatter);
-    passwordField.setTextFormatter(this.passwordFormatter);
+    usernameField.setTextFormatter(this.service.getUserNameFormatter());
+    passwordField.setTextFormatter(this.service.getPasswordFormatter());
 
     BooleanBinding isDisabledBinding = Bindings.createBooleanBinding(
         this::areInputsInvalid,
@@ -79,7 +63,7 @@ public class LoginController {
   }
 
   protected boolean areInputsInvalid() {
-    return username.get().isEmpty() || password.get().isEmpty() || password.get().length() < 6;
+    return !this.service.isButtonActive(username.get(), password.get());
   }
 
   public LoginController setService(ILoginService service) {
@@ -90,7 +74,8 @@ public class LoginController {
   @FXML
   private void handleLoginClick(MouseEvent event) {
     if (Objects.equals(event.getButton(), MouseButton.PRIMARY)) {
-      logger.info("Login button clicked!");
+      this.service.isUserAvailable(username.get());
+      this.service.login(username.get(), password.get());
     }
   }
 }
