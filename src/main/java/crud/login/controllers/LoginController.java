@@ -1,27 +1,81 @@
 package crud.login.controllers;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import crud.login.services.ILoginService;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+@Singleton
 public class LoginController {
   private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
+  private ILoginService service;
+
   @FXML
-  private void handleLoginClick(MouseEvent  event){
-    if(!event.isPrimaryButtonDown()){
-      logger.info("Login button clicked!");
+  private TextField usernameField;
+
+  @FXML
+  private PasswordField passwordField;
+
+  @FXML
+  private Button loginButton;
+
+  private final StringProperty username = new SimpleStringProperty();
+
+  private final StringProperty password = new SimpleStringProperty();
+
+
+  @Inject
+  public LoginController(ILoginService service) {
+    this.setService(service);
+  }
+
+  public void initialize() {
+    Objects.requireNonNull(
+        this.service,
+        "you must set the service before initializing the controller");
+
+    username.bind(usernameField.textProperty());
+    password.bind(passwordField.textProperty());
+
+    usernameField.setTextFormatter(this.service.getUserNameFormatter());
+    passwordField.setTextFormatter(this.service.getPasswordFormatter());
+
+    BooleanBinding isDisabledBinding = Bindings.createBooleanBinding(
+        this::areInputsInvalid,
+        username,
+        password);
+
+    loginButton.disableProperty().bind(isDisabledBinding);
+  }
+
+  protected boolean areInputsInvalid() {
+    return !this.service.isButtonActive(username.get(), password.get());
+  }
+
+  public LoginController setService(ILoginService service) {
+    this.service = Objects.requireNonNull(service);
+    return this;
+  }
+
+  @FXML
+  private void handleLoginClick(MouseEvent event) {
+    if (Objects.equals(event.getButton(), MouseButton.PRIMARY)) {
+      this.service.isUserAvailable(username.get());
+      this.service.login(username.get(), password.get());
     }
-  }
-
-  @FXML
-  private void handleUserNameChange(){
-    logger.info("Username Change");
-  }
-
-  @FXML
-  private void handlePasswordChange(){
-    logger.info("Password Change");
   }
 }
