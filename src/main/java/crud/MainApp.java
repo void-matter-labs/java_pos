@@ -4,7 +4,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import crud.login.controllers.LoginController;
-import crud.login.services.NullLoginService;
 import crud.shared.module.AppModule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
