@@ -1,5 +1,11 @@
 package crud;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import crud.login.controllers.LoginController;
+import crud.login.services.NullLoginService;
+import crud.shared.module.AppModule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -15,6 +21,16 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/Login.fxml"));
+
+        Injector injector = Guice.createInjector(new AppModule());
+
+        loader
+          .setControllerFactory(
+            param->
+             injector.getInstance(LoginController.class)
+            );
+
+
         Parent root = loader.load();
         var bounds = this.getVisualBounds();
 
