@@ -1,0 +1,4 @@
+id,name,description
+1,Admin,Administrator role
+2,User,Regular user role
+3,Guest,Guest role

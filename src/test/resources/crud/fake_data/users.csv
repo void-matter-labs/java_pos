@@ -1,0 +1,4 @@
+id,username,password,permissionId
+1,john_doe,secure_password,101
+2,jane_doe,another_password,102
+3,admin,admin_password,100
