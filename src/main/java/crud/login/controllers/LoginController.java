@@ -24,6 +24,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
+// TODO: singleton may be not the best fit bacuse
+//this controller only helps us when we have a login page, that makes sense if
+//login is something that we use too much and better memmoized this controller but
+//if not how to clean this controller when Login page is not shown anymore
 @Singleton
 public class LoginController {
   private static final Logger logger = Logger.getLogger(LoginController.class.getName());
@@ -56,6 +60,8 @@ public class LoginController {
     username.bind(usernameField.textProperty());
     password.bind(passwordField.textProperty());
 
+    //TODO: We need a smart way to handle the remove listener in case this controller disappers
+    //like weak listeners
     usernameField.setTextFormatter(this.service.getUserNameFormatter());
     passwordField.setTextFormatter(this.service.getPasswordFormatter());
 
