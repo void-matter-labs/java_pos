@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Objects;
-import java.io.File;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -15,7 +14,7 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import crud.login.dtos.FileSystemUserDTO;
 import lombok.Setter;
 
-public class FileSystemUserDAO {
+public class FileSystemUserDAO extends BaseFileSystemDAO {
   private static final IUserFilteringStrategy defaultFilteringByIdStrategy = (users, id) -> users
       .stream()
       .filter(user -> user.getId().equals(id))
@@ -28,8 +27,6 @@ public class FileSystemUserDAO {
       .findFirst()
       .orElse(null);
 
-  private final String csvPath;
-
   @Setter
   private IUserFilteringStrategy filteringByIdStrategy = defaultFilteringByIdStrategy;
 
@@ -40,25 +37,7 @@ public class FileSystemUserDAO {
   public FileSystemUserDAO(@Named("FileSystemUserCSV") String csvPath) {
     this.csvPath = Objects.requireNonNull(csvPath);
 
-    // Ensure the file ends with a newline
-    ensureFileEndsWithNewline();
-  }
-
-  private void ensureFileEndsWithNewline() {
-    try (FileReader fileReader = new FileReader(csvPath)) {
-      long fileLength = new File(csvPath).length();
-      if (fileLength > 0) {
-        fileReader.skip(fileLength - 1); // Move to the last character
-        int lastChar = fileReader.read();
-        if (lastChar != '\n') {
-          try (FileWriter writer = new FileWriter(csvPath, true)) {
-            writer.write(System.lineSeparator()); // Append a newline
-          }
-        }
-      }
-    } catch (Exception e) {
-      throw new RuntimeException("Error ensuring file ends with a newline", e);
-    }
+    this.ensureFileEndsWithNewline();
   }
 
   public List<FileSystemUserDTO> getAllUsers() {
