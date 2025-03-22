@@ -24,10 +24,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
-// TODO: singleton may be not the best fit bacuse
-//this controller only helps us when we have a login page, that makes sense if
-//login is something that we use too much and better memmoized this controller but
-//if not how to clean this controller when Login page is not shown anymore
 @Singleton
 public class LoginController {
   private static final Logger logger = Logger.getLogger(LoginController.class.getName());
@@ -47,7 +43,6 @@ public class LoginController {
 
   private final StringProperty password = new SimpleStringProperty();
 
-
   @Inject
   public LoginController(ILoginService service) {
     this.setService(service);
@@ -58,8 +53,6 @@ public class LoginController {
         this.service,
         "you must set the service before initializing the controller");
 
-
-    // We need a smart way to handle the remove listener in case this controller disappers
     username.bind(usernameField.textProperty());
     password.bind(passwordField.textProperty());
 
@@ -89,29 +82,27 @@ public class LoginController {
       boolean isLogged = this.service.login(username.get(), password.get());
       logger.info("isLogged: " + isLogged);
 
-      if(isLogged){
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("/main_app/MainApp.fxml"));
+      if (isLogged) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main_app/MainApp.fxml"));
 
-          Parent protectedView = loader.load();
+        Parent protectedView = loader.load();
 
-          Scene currentScene = ((javafx.scene.Node) event.getSource()).getScene();
+        Scene currentScene = ((javafx.scene.Node) event.getSource()).getScene();
 
-           FadeTransition fadeOut = new FadeTransition(Duration.millis(500), currentScene.getRoot());
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), currentScene.getRoot());
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
 
-            // When fade-out is complete, switch the root and fade in
-            fadeOut.setOnFinished(e -> {
-                currentScene.setRoot(protectedView);
+        fadeOut.setOnFinished(e -> {
+          currentScene.setRoot(protectedView);
 
-                // Create a fade-in transition for the new root
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), protectedView);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
-            });
+          FadeTransition fadeIn = new FadeTransition(Duration.millis(500), protectedView);
+          fadeIn.setFromValue(0.0);
+          fadeIn.setToValue(1.0);
+          fadeIn.play();
+        });
 
-          fadeOut.play();
+        fadeOut.play();
       }
     }
   }

@@ -9,7 +9,9 @@ import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import crud.login.dtos.FileSystemRoleDTO;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class FileSystemRoleDAO extends BaseFileSystemDAO {
 
   public FileSystemRoleDAO(String csvPath) {
@@ -26,7 +28,7 @@ public class FileSystemRoleDAO extends BaseFileSystemDAO {
 
     } catch (Exception e) {
       throw new RuntimeException("Error reading csv file", e);
-    }    
+    }
   }
 
   public void addNewRole(FileSystemRoleDTO role) {
