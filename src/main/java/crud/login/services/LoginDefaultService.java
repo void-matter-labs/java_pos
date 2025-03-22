@@ -1,8 +1,21 @@
 package crud.login.services;
 
-import javafx.scene.control.TextFormatter;
+import com.google.inject.Inject;
 
+import crud.login.models.FileSystemUser;
+import crud.login.repository.IUserRepository;
+import javafx.scene.control.TextFormatter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class LoginDefaultService implements ILoginService {
+  private IUserRepository userRepository;
+
+  @Inject
+  public LoginDefaultService(IUserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
   @Override
   public boolean isButtonActive(String username, String password) {
     return username.length() > 4 && password.length() >4 ;
@@ -15,7 +28,11 @@ public class LoginDefaultService implements ILoginService {
 
   @Override
   public boolean login(String username, String password) {
-    return username.equals("admin") && password.equals("admin");
+    return this
+      .userRepository
+      .getUserByName(username)
+      .equalsByLoginData(new FileSystemUser(username, password))
+    ;
   }
 
   @Override

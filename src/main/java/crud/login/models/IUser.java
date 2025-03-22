@@ -8,6 +8,8 @@ public interface IUser {
   String getFirstName();
   String getLastName();
 
+  public boolean equalsByLoginData(FileSystemUser user);
+
   void setUsername(String username);
   void setPassword(String password);
   void setRole(IRole role);

@@ -1,15 +1,14 @@
 package crud.login.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 import crud.login.data.FileSystemRoleDAO;
 import crud.login.data.FileSystemUserDAO;
-import crud.login.dtos.FileSystemUserDTO;
+
+import crud.login.mappers.FileSystemUserMapper;
 import crud.login.models.IRole;
 import crud.login.models.IUser;
 import lombok.NoArgsConstructor;
@@ -40,7 +39,9 @@ public class FileSystemUserRepository implements IUserRepository {
   }
 
   public IUser getUserByName(String username) {
-    throw new UnsupportedOperationException("Not implemented yet");
+    return FileSystemUserMapper
+      .INSTANCE
+      .toEntity(this.userDAO.getUserByName(username));
   }
 
   public List<IUser> listUsers() {

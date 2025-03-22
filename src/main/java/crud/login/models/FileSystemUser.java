@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class FileSystemUser implements IUser {
+  public FileSystemUser(String username, String password){
+    this.username = username;
+    this.password = password;
+  }
+
   private String id;
   private String username;
   private String password;
@@ -15,5 +20,8 @@ public class FileSystemUser implements IUser {
   private String firstName;
   private String lastName;
 
-
+  public boolean equalsByLoginData(FileSystemUser user){
+    return this.username.equals(user.getUsername())
+      && this.password.equals(user.getPassword());
+  }
 }
