@@ -8,17 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import crud.login.data.FileSystemUserDAO;
 import crud.login.dtos.FileSystemUserDTO;
+import utils.BaseCSVTester;
 
-class FileSystemUserDAOReadTest {
+class FileSystemUserDAOReadTest extends BaseCSVTester {
+
+  @Override
+  protected void initialize() {
+    this.setCsvPath(this.getFullCSVPath("crud/fake_data/users.csv"));
+  }
+
   @Test
   void getUsers(){
-    String csvPath = getClass()
-      .getClassLoader()
-      .getResource("crud/fake_data/users.csv").getPath();
-
-    FileSystemUserDAO fileSystemUserDAO = new FileSystemUserDAO(csvPath);
+    FileSystemUserDAO fileSystemUserDAO = new FileSystemUserDAO(this.getCsvPath());
     List<FileSystemUserDTO> users = fileSystemUserDAO.getAllUsers();
-
 
     assertEquals(3, users.size());
   }
