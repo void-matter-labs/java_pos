@@ -3,10 +3,9 @@ package crud.login.services;
 import javafx.scene.control.TextFormatter;
 
 public class LoginDefaultService implements ILoginService {
-
   @Override
   public boolean isButtonActive(String username, String password) {
-    return !username.isEmpty() && !password.isEmpty();
+    return username.length() > 4 && password.length() >4 ;
   }
 
   @Override
