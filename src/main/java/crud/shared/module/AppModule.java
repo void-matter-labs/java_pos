@@ -4,14 +4,14 @@ import com.google.inject.AbstractModule;
 
 import crud.login.controllers.LoginController;
 import crud.login.services.ILoginService;
-import crud.login.services.NullLoginService;
+import crud.login.services.LoginDefaultService;
 
 public class AppModule extends AbstractModule {
   @Override
   protected void configure() {
     this
       .bind(ILoginService.class)
-      .to(NullLoginService.class);
+      .to(LoginDefaultService.class);
 
     this
       .bind(LoginController.class);
