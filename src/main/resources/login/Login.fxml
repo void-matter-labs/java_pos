@@ -13,7 +13,7 @@
   hgap="40"
   vgap="60"
   stylesheets="@styles.css"
-  fx:controller="crud.login.controllers.LoginController"
+  fx:controller="crud.app.login.controllers.LoginMainController"
 >
   <padding>
     <Insets top="30" right="30" bottom="30" left="30"/>
