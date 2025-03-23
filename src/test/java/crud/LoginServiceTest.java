@@ -2,6 +2,7 @@ package crud;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import crud.login.services.ILoginService;
@@ -9,6 +10,7 @@ import crud.login.services.LoginDefaultService;
 
 class LoginServiceTest {
   @Test
+  @Disabled("We need to mock the repository")
   void login(){
     ILoginService loginService = new LoginDefaultService();
     boolean isLogged = loginService.login("admin", "admin");
