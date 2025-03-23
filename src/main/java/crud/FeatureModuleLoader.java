@@ -8,16 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Module;
+import com.google.inject.name.Names;
 
-import crud.app.login.controllers.LoginMainController;
+import crud.shared.constants.GuiceNames;
 import crud.shared.utils.ScreenUtils;
-
-
 
 public class FeatureModuleLoader extends Application {
   @Override
@@ -25,14 +23,14 @@ public class FeatureModuleLoader extends Application {
     String moduleName = Objects.requireNonNull(System.getProperty("module"));
 
     String capitalizedModuleName = FeatureModuleLoader.capitalize(moduleName);
-    String lowerCaseModuleName = moduleName.toLowerCase();
+    String pascalizedModuleName = FeatureModuleLoader.pascalize(moduleName);
     String resourcePath = "/"
-      + lowerCaseModuleName
-      + "/"
-      + capitalizedModuleName
-      + ".fxml";
+        + pascalizedModuleName
+        + "/"
+        + capitalizedModuleName
+        + ".fxml";
 
-    Module module = loadModule(capitalizedModuleName);
+    Module module = loadModule(moduleName);
 
     Injector injector = Guice.createInjector(module);
 
@@ -40,7 +38,7 @@ public class FeatureModuleLoader extends Application {
 
     loader
       .setControllerFactory(
-        param -> injector.getInstance(LoginMainController.class)
+        param -> injector.getInstance(Key.get(param, Names.named(GuiceNames.MAIN_CONTROLLER.name())))
       );
 
     Parent root = loader.load();
@@ -54,24 +52,48 @@ public class FeatureModuleLoader extends Application {
     primaryStage.setTitle(moduleName + " Sandbox");
     primaryStage.setScene(scene);
     primaryStage.show();
-}
-  private static  String capitalize(String moduleName){
-    return moduleName
-      .substring(0, 1)
-      .toUpperCase() + moduleName
-      .substring(1)
-      .toLowerCase();
+  }
+
+  private static boolean isBlank(String input) {
+    return Objects.requireNonNullElse(input, "").isBlank();
+  }
+
+  private static String capitalize(String input) {
+    if (FeatureModuleLoader.isBlank(input)) {
+      return input;
+    }
+    String[] parts = input.split("_");
+    StringBuilder result = new StringBuilder();
+    for (String part : parts) {
+      result.append(part.substring(0, 1).toUpperCase())
+          .append(part.substring(1).toLowerCase());
+    }
+    return result.toString();
+  }
+
+  private static String pascalize(String input) {
+    if (FeatureModuleLoader.isBlank(input)) {
+      return input;
+    }
+    StringBuilder result = new StringBuilder();
+    for (int i = 0; i < input.length(); i++) {
+      char c = input.charAt(i);
+      if (Character.isUpperCase(c) && i > 0) {
+        result.append("_");
+      }
+      result.append(Character.toLowerCase(c));
+    }
+    return result.toString();
   }
 
   private Module loadModule(String moduleName) throws IllegalArgumentException {
     try {
-      moduleName = capitalize(moduleName);
       String className = "crud."
-        + "app."
-        + moduleName.toLowerCase()
-        +"."
-        + moduleName
-        + "Module";
+          + "app."
+          + FeatureModuleLoader.pascalize(moduleName)
+          + "."
+          + FeatureModuleLoader.capitalize(moduleName)
+          + "Module";
 
       Class<?> clazz = Class.forName(className);
 
