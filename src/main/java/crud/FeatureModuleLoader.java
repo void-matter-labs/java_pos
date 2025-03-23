@@ -10,11 +10,8 @@ import javafx.stage.Stage;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 import com.google.inject.Module;
-import com.google.inject.name.Names;
 
-import crud.shared.constants.GuiceNames;
 import crud.shared.utils.ScreenUtils;
 
 public class FeatureModuleLoader extends Application {
@@ -41,8 +38,10 @@ public class FeatureModuleLoader extends Application {
   private Parent loadFXML(String moduleName, Injector injector) throws Exception {
     String resourcePath = buildFXMLPath(moduleName);
     FXMLLoader loader = new FXMLLoader(getClass().getResource(resourcePath));
+
     loader.setControllerFactory(
-        param -> injector.getInstance(Key.get(param, Names.named(GuiceNames.MAIN_CONTROLLER.name()))));
+      controllerClass -> injector.getInstance(controllerClass)
+    );
 
     return loader.load();
   }
