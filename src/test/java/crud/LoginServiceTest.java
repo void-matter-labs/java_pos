@@ -1,36 +1,64 @@
 package crud;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import crud.login.services.ILoginService;
-import crud.login.services.LoginDefaultService;
+import crud.app.login.application_services.LoginService;
+import crud.app.login.dtos.IAuthUser;
+import crud.app.login.persistence.ILoginRepository;
 
 class LoginServiceTest {
-  @Test
-  @Disabled("We need to mock the repository")
-  void login(){
-    ILoginService loginService = new LoginDefaultService();
-    boolean isLogged = loginService.login("admin", "admin");
+  private LoginService loginService;
 
-    assertTrue(isLogged);
+  @Mock
+  private ILoginRepository loginRepository;
+
+  @BeforeEach
+  void setUp(){
+    MockitoAnnotations.openMocks(this);
+    loginService = new LoginService(loginRepository);
+  }
+
+  private IAuthUser createMockedUser(String username, String password){
+    IAuthUser mockUser = mock(IAuthUser.class);
+    when(mockUser.getUsername()).thenReturn(username);
+    when(mockUser.getPassword()).thenReturn(password);
+
+    return mockUser;
   }
 
   @Test
-  void isUserAvailable(){
-    ILoginService loginService = new LoginDefaultService();
-    boolean isUserAvailable = loginService.isUserAvailable("admin");
+  void testLogin(){
+    IAuthUser mockUser = this
+      .createMockedUser(
+        "testUser",
+        "password123"
+      );
 
-    assertTrue(isUserAvailable);
-  }
+    IAuthUser userFromRepo = this
+      .createMockedUser(
+        "testUser",
+        "password123"
+      );
 
-  @Test
-  void isButtonActive(){
-    ILoginService loginService = new LoginDefaultService();
-    boolean isButtonActive = loginService.isButtonActive("admin", "admin");
+    when(userFromRepo.getId()).thenReturn("user123");
 
-    assertTrue(isButtonActive);
+    when(loginRepository.getUserByUserName("testUser"))
+      .thenReturn(userFromRepo);
+
+    String result = loginService.login(mockUser);
+
+    assertEquals("user123", result);
+    verify(loginRepository, times(1))
+      .createSession(any());
   }
 }
