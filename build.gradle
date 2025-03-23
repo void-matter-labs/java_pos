@@ -3,6 +3,7 @@ plugins{
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.1.0'
   id("io.freefair.lombok") version "8.13"
+  id 'boilerplate-local-plugin'
 }
 
 repositories {
@@ -31,6 +32,13 @@ test {
     showStandardStreams = true
 	}
 }
+tasks.register("dev") {
+  def hasModule =project.hasProperty("module")
+  def module = hasModule? project.module : "login"
+  application.mainClass = hasModule? "crud.FeatureModuleLoader" : "crud.MainApp"
+
+  dependsOn "run"
+}
 
 application {
   mainClass = 'crud.MainApp'
@@ -39,4 +47,10 @@ application {
 javafx {
   version = "21"
   modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+tasks.named("run").configure {
+  if (project.hasProperty("module")) {
+    jvmArgs("-Dmodule=${project.module}")
+  }
 }

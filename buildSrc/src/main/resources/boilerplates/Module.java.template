@@ -1,0 +1,10 @@
+package crud.app.${featureName};
+
+import com.google.inject.AbstractModule;
+
+public class ${featureNameCapitalized}Module extends AbstractModule {
+    @Override
+    protected void configure() {
+        // Bindings for ${featureName} module
+    }
+}

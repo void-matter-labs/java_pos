@@ -7,6 +7,7 @@ import com.google.inject.Injector;
 
 import crud.login.controllers.LoginController;
 import crud.shared.module.AppModule;
+import crud.shared.utils.ScreenUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -24,14 +25,14 @@ public class MainApp extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/Login.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/login/Login.fxml"));
 
-    loader
-        .setControllerFactory(
-            param -> injector.getInstance(LoginController.class));
+      loader
+          .setControllerFactory(
+              param -> injector.getInstance(LoginController.class));
 
     Parent root = loader.load();
-    var bounds = this.getVisualBounds();
+    var bounds = ScreenUtils.getVisualBounds();
 
     double windowWidth = bounds.getWidth() * 0.8;
     double windowHeight = bounds.getHeight() * 0.8;
@@ -43,9 +44,6 @@ public class MainApp extends Application {
     primaryStage.show();
   }
 
-  private Rectangle2D getVisualBounds() {
-    return Screen.getPrimary().getVisualBounds();
-  }
 
   public static void main(String[] args) {
     Injector injector = Guice.createInjector(new AppModule());
@@ -53,4 +51,4 @@ public class MainApp extends Application {
     setInjector(injector);
     launch(args);
   }
-};
+}

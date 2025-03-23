@@ -1,0 +1,84 @@
+.root {
+  -color-bg-main: #191919;
+  -color-bg-secondary: #252525;
+  -color-bg-tertiary: #2e2e3a;
+
+  -color-fg-main: #eaeaea;
+  -color-fg-secondary: #b0b0c0;
+  -color-fg-tertiary: #8a8aa0;
+
+  -color-bg-button-primary: #a64dff;
+  -color-fg-button-primary: #ffffff;
+  -color-border-button-primary: #b366ff;
+  -color-shadow-button-primary: #5a007a;
+  -color-bg-button-primary-hover: #8c3de0;
+  -color-fg-button-primary-hover: #ffffff;
+  -color-bg-button-primary-pressed: #732bbf;
+  -color-fg-button-primary-pressed: #ffffff;
+  -color-bg-button-primary-disabled: #4a1e5a;
+  -color-fg-button-primary-disabled: #8a8aa0;
+
+  -color-bg-button-secondary: #3a3a55;
+  -color-fg-button-secondary: #c0c0d0;
+  -color-border-button-secondary: #4a4a6a;
+  -color-shadow-button-secondary: #2e2e44;
+  -color-bg-button-secondary-hover: #4a4a6a;
+  -color-fg-button-secondary-hover: #ffffff;
+  -color-bg-button-secondary-pressed: #2e2e3a;
+  -color-fg-button-secondary-pressed: #ffffff;
+  -color-bg-button-secondary-disabled: #252525;
+  -color-fg-button-secondary-disabled: #8a8aa0;
+
+  -color-bg-button-tertiary: #2e2e3a;
+  -color-fg-button-tertiary: #8a8aa0;
+  -color-border-button-tertiary: #3a3a55;
+  -color-shadow-button-tertiary: #1e1e2f;
+  -color-bg-button-tertiary-hover: #3a3a55;
+  -color-fg-button-tertiary-hover: #ffffff;
+  -color-bg-button-tertiary-pressed: #252525;
+  -color-fg-button-tertiary-pressed: #ffffff;
+  -color-bg-button-tertiary-disabled: #191919;
+  -color-fg-button-tertiary-disabled: #6a6a80;
+
+  -color-bg-input-primary: #252525;
+  -color-fg-input-primary: #eaeaea;
+  -color-border-input-primary: #4a4a6a;
+  -color-shadow-input-primary: #2e2e44;
+  -color-bg-input-primary-hover: #2e2e3a;
+  -color-fg-input-primary-hover: #ffffff;
+  -color-bg-input-primary-focused: #3a3a55;
+  -color-fg-input-primary-focused: #ffffff;
+  -color-bg-input-primary-disabled: #191919;
+  -color-fg-input-primary-disabled: #8a8aa0;
+
+  -color-bg-input-secondary: #2e2e3a;
+  -color-fg-input-secondary: #c0c0d0;
+  -color-border-input-secondary: #3a3a55;
+  -color-shadow-input-secondary: #1e1e2f;
+  -color-bg-input-secondary-hover: #3a3a55;
+  -color-fg-input-secondary-hover: #ffffff;
+  -color-bg-input-secondary-focused: #4a4a6a;
+  -color-fg-input-secondary-focused: #ffffff;
+  -color-bg-input-secondary-disabled: #252525;
+  -color-fg-input-secondary-disabled: #8a8aa0;
+
+  -color-bg-input-tertiary: #191919;
+  -color-fg-input-tertiary: #8a8aa0;
+  -color-border-input-tertiary: #2e2e3a;
+  -color-shadow-input-tertiary: #1e1e2f;
+  -color-bg-input-tertiary-hover: #252525;
+  -color-fg-input-tertiary-hover: #ffffff;
+  -color-bg-input-tertiary-focused: #3a3a55;
+  -color-fg-input-tertiary-focused: #ffffff;
+  -color-bg-input-tertiary-disabled: #191919;
+  -color-fg-input-tertiary-disabled: #6a6a80;
+
+  -color-text-title: #ff6f61;
+  -color-text-subtitle: #b0b0c0;
+  -color-text-paragraph: #eaeaea;
+  -color-text-disabled: #8a8aa0;
+
+  -color-accent-blue: #4d88ff;
+  -color-accent-red: #ff4d4d;
+  -color-accent-purple: #a64dff;
+}
