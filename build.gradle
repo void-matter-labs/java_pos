@@ -33,15 +33,11 @@ test {
 	}
 }
 tasks.register("dev") {
-  def hasModule =project.hasProperty("module")
-  def module = hasModule? project.module : "login"
-  application.mainClass = hasModule? "crud.FeatureModuleLoader" : "crud.MainApp"
-
   dependsOn "run"
 }
 
 application {
-  mainClass = 'crud.MainApp'
+  mainClass = "crud.FeatureModuleLoader"
 }
 
 javafx {
@@ -50,7 +46,8 @@ javafx {
 }
 
 tasks.named("run").configure {
-  if (project.hasProperty("module")) {
-    jvmArgs("-Dmodule=${project.module}")
-  }
+  def hasModule =project.hasProperty("module")
+  def module = hasModule? project.module : "login"
+
+  jvmArgs("-Dmodule=${module}")
 }
