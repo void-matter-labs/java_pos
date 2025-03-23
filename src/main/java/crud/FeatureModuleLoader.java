@@ -49,6 +49,8 @@ public class FeatureModuleLoader extends Application {
 
     Scene scene = new Scene(root, windowWidth, windowHeight);
 
+    scene.getStylesheets().add(getClass().getResource("/shared/styles/dark_theme.css").toExternalForm());
+
     primaryStage.setTitle(moduleName + " Sandbox");
     primaryStage.setScene(scene);
     primaryStage.show();
