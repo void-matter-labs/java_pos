@@ -20,7 +20,7 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
       task.doLast(innerTask -> {
         String featureName = (String) project.findProperty("featName");
         System.out.println("Feature name provided: " + featureName);
-        if (FeatureBoilerPlatePlugin.checkIfEmpty(featureName)) {
+        if (FeatureBoilerPlatePlugin.isBlank(featureName)) {
           throw new GradleException("Please provide a feature name using -PfeatureName=<featureName>");
         }
 
@@ -28,14 +28,18 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
         String featureNamePascalized = FeatureBoilerPlatePlugin.pascalize(featureName);
 
         String baseJavaPath = "src/main/java/crud/app/" + featureNamePascalized;
-        String baseResourcesPath = "src/main/resources/app" + featureNamePascalized;
+        String baseResourcesPath = "src/main/resources/app/" + featureNamePascalized;
+        String baseControllerPath = baseJavaPath + "/controllers";
 
         new File(baseJavaPath).mkdirs();
         new File(baseResourcesPath).mkdirs();
+        new File(baseControllerPath).mkdirs();
 
         Map<String, String> boilerplates = new HashMap<>();
         boilerplates.put("boilerplates/Module.java.template",
             baseJavaPath + "/" + featureNameCapitalized + "Module.java");
+        boilerplates.put("boilerplates/MainController.java.template",
+            baseControllerPath + "/" + featureNameCapitalized + "MainController.java");
         boilerplates.put("boilerplates/View.fxml.template", baseResourcesPath + "/" + featureNameCapitalized + ".fxml");
         boilerplates.put("boilerplates/styles.css.template", baseResourcesPath + "/styles.css");
 
@@ -65,7 +69,7 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
   }
 
   private static String capitalize(String input) {
-    if (FeatureModuleLoader.isBlank(input)) {
+    if (FeatureBoilerPlatePlugin.isBlank(input)) {
       return input;
     }
     String[] parts = input.split("_");
@@ -78,7 +82,7 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
   }
 
   private static String pascalize(String input) {
-    if (FeatureModuleLoader.isBlank(input)) {
+    if (FeatureBoilerPlatePlugin.isBlank(input)) {
       return input;
     }
     StringBuilder result = new StringBuilder();

@@ -1,0 +1,5 @@
+package crud.app.${featureName}.controllers;
+
+public class ${featureNameCapitalized}MainController {
+
+}
