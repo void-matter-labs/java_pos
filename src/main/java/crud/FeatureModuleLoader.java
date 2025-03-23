@@ -24,7 +24,7 @@ public class FeatureModuleLoader extends Application {
 
     String capitalizedModuleName = FeatureModuleLoader.capitalize(moduleName);
     String pascalizedModuleName = FeatureModuleLoader.pascalize(moduleName);
-    String resourcePath = "/"
+    String resourcePath = "/app/"
         + pascalizedModuleName
         + "/"
         + capitalizedModuleName

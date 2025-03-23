@@ -14,10 +14,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class FeatureBoilerPlatePlugin implements Plugin<Project> {
-  private static boolean checkIfEmpty(String string) {
-    return Objects.requireNonNullElse(string, "").isBlank();
-  }
-
   @Override
   public void apply(Project project) {
     project.getTasks().register("createFeat", task -> {
@@ -28,10 +24,11 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
           throw new GradleException("Please provide a feature name using -PfeatureName=<featureName>");
         }
 
-        String featureNameCapitalized = capitalize(featureName);
+        String featureNameCapitalized = FeatureBoilerPlatePlugin.capitalize(featureName);
+        String featureNamePascalized = FeatureBoilerPlatePlugin.pascalize(featureName);
 
-        String baseJavaPath = "src/main/java/crud/app/" + featureName.toLowerCase();
-        String baseResourcesPath = "src/main/resources/" + featureName.toLowerCase();
+        String baseJavaPath = "src/main/java/crud/app/" + featureNamePascalized;
+        String baseResourcesPath = "src/main/resources/app" + featureNamePascalized;
 
         new File(baseJavaPath).mkdirs();
         new File(baseResourcesPath).mkdirs();
@@ -49,7 +46,7 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
             }
 
             String content = new String(templateStream.readAllBytes())
-                .replace("${featureName}", featureName)
+                .replace("${featureName}", featureNamePascalized )
                 .replace("${featureNameCapitalized}", featureNameCapitalized);
 
             File destinationFile = project.file(destinationPath);
@@ -63,10 +60,35 @@ public class FeatureBoilerPlatePlugin implements Plugin<Project> {
     });
   }
 
-  private String capitalize(String input) {
-    if (FeatureBoilerPlatePlugin.checkIfEmpty(input)) {
+  private static boolean isBlank(String input) {
+    return Objects.requireNonNullElse(input, "").isBlank();
+  }
+
+  private static String capitalize(String input) {
+    if (FeatureModuleLoader.isBlank(input)) {
       return input;
     }
-    return input.substring(0, 1).toUpperCase() + input.substring(1);
+    String[] parts = input.split("_");
+    StringBuilder result = new StringBuilder();
+    for (String part : parts) {
+      result.append(part.substring(0, 1).toUpperCase())
+          .append(part.substring(1).toLowerCase());
+    }
+    return result.toString();
+  }
+
+  private static String pascalize(String input) {
+    if (FeatureModuleLoader.isBlank(input)) {
+      return input;
+    }
+    StringBuilder result = new StringBuilder();
+    for (int i = 0; i < input.length(); i++) {
+      char c = input.charAt(i);
+      if (Character.isUpperCase(c) && i > 0) {
+        result.append("_");
+      }
+      result.append(Character.toLowerCase(c));
+    }
+    return result.toString();
   }
 }

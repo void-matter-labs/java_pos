@@ -25,7 +25,7 @@ public class MainApp extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/Login.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/login/Login.fxml"));
 
       loader
           .setControllerFactory(
