@@ -18,7 +18,7 @@ public class LoginService {
     this.loginRepository = loginRepository;
   }
 
-  public String login(IAuthUser user) {
+  public String login(IAuthUser user) throws Exception {
     IAuthUser userData = loginRepository.getUserByUserName(user.getUsername());
 
     if (userData == null) {
@@ -31,7 +31,7 @@ public class LoginService {
       session.setId(UUID.randomUUID().toString());
       session.setCreatedAt(Instant.now());
 
-      this.loginRepository.createSession(null);
+      this.loginRepository.createSession(session);
 
       return userData.getId();
     }
