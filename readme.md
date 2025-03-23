@@ -52,7 +52,7 @@ We move into something like this
       ├── FileStorageService.ts    # Handles file uploads for multiple modules
       ├── NotificationService.ts   # Handles notifications across modules
     /persistence
-      /database
+      /datasource
         ├── MongoConnection.ts     # DB connection
         ├── CSVParser.ts           # CSV utilities
       /repository

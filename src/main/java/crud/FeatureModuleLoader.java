@@ -12,6 +12,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
+import crud.shared.context.GlobalModule;
 import crud.shared.utils.ScreenUtils;
 
 public class FeatureModuleLoader extends Application {
@@ -21,11 +22,16 @@ public class FeatureModuleLoader extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
+    String moduleNameFromProperty = System.getProperty("module");
     String moduleName = Objects
-      .requireNonNull(System.getProperty("module"), "Module name must be provided");
+      .requireNonNull(
+        moduleNameFromProperty,
+        "Module name must be provided"
+      );
 
     Module module = loadModule(moduleName);
-    Injector injector = Guice.createInjector(module);
+    Injector globalInjector = Guice.createInjector(new GlobalModule());
+    Injector injector = globalInjector.createChildInjector(module);
 
     Parent root = loadFXML(moduleName, injector);
     Scene scene = createScene(root);

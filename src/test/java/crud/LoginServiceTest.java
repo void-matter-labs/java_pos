@@ -38,7 +38,7 @@ class LoginServiceTest {
   }
 
   @Test
-  void testLogin() {
+  void testLogin() throws Exception {
     IAuthUser mockUser = this.createMockedUser("testUser", "password123");
     IAuthUser userFromRepo = this.createMockedUser("testUser", "password123");
     when(userFromRepo.getId()).thenReturn("user123");
@@ -51,7 +51,7 @@ class LoginServiceTest {
   }
 
   @Test
-  void testLogin_UserNotFound() {
+  void testLogin_UserNotFound() throws Exception {
     IAuthUser mockUser = this.createMockedUser("nonexistentUser", "password123");
     when(loginRepository.getUserByUserName("nonexistentUser")).thenReturn(null);
 
@@ -62,7 +62,7 @@ class LoginServiceTest {
   }
 
   @Test
-  void testLogin_InvalidPassword() {
+  void testLogin_InvalidPassword() throws Exception {
     IAuthUser mockUser = this.createMockedUser("testUser", "wrongPassword");
     IAuthUser userFromRepo = this.createMockedUser("testUser", "password123");
     when(loginRepository.getUserByUserName("testUser")).thenReturn(userFromRepo);
