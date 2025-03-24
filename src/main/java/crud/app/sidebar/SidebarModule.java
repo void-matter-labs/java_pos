@@ -1,0 +1,30 @@
+package crud.app.sidebar;
+
+import java.util.Arrays;
+import java.util.List;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+
+import crud.app.sidebar.dtos.ButtonConfig;
+
+public class SidebarModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        // Bindings for sidebar module
+    }
+
+    @Provides
+    public List<ButtonConfig> provideButtonConfigs() {
+        return Arrays.asList(
+            new ButtonConfig("button1", "Button 1", true),
+            new ButtonConfig("button2", "Button 2", false),
+            new ButtonConfig("button3", "Button 3", false)
+        );
+    }
+
+    @Provides
+    public String provideSelectedButtonId() {
+        return "button1";
+    }
+}
