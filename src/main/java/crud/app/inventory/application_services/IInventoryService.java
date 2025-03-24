@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import crud.app.inventory.dtos.IInventoryItem;
 
 public interface IInventoryService {
-  public List<IInventoryItem> getAllItems();
-  public List<IInventoryItem> getItemsByFilter(Predicate<IInventoryItem> filter);
+  public List<IInventoryItem> getAllItems() throws Exception;
+  public List<IInventoryItem> getItemsByFilter(Predicate<IInventoryItem> filter) throws Exception;
+  public List<IInventoryItem> searchItemsByContent(String content) throws Exception;
 }

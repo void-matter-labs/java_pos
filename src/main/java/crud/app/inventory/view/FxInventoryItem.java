@@ -1,18 +1,11 @@
 package crud.app.inventory.view;
 
-import java.util.function.Predicate;
+
 
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,13 +31,13 @@ public class FxInventoryItem extends VBox {
 
     setSpacing(10);
     setPadding(new javafx.geometry.Insets(10));
-    setPrefWidth(200);
+    setPrefWidth(300);
 
     getChildren().addAll(
-      new Label(itemId),
+      new Label("Id: " +itemId),
+      new Label(productName),
       new Label(description),
       new Label("Quantity: " + quantity),
-      new Label("Product: " + productName),
       new Label(String.format("$%.2f", price))
     );
   }

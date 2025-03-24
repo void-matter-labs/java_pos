@@ -4,10 +4,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-import crud.app.inventory.application_services.FakeInventoryService;
+import crud.app.inventory.application_services.InventoryService;
 import crud.app.inventory.application_services.IInventoryService;
 import crud.app.inventory.controllers.InventoryMainController;
+import crud.app.inventory.persistence.IInventoryRepository;
+import crud.app.inventory.persistence.InventoryRepository;
 import crud.app.inventory.view.FxInventoryItem;
+import crud.shared.persistence.dao.ProductsCsvDao;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -18,9 +21,12 @@ public class InventoryModule extends AbstractModule {
       bind(InventoryMainController.class);
 
       bind(IInventoryService.class)
-        .to(FakeInventoryService.class);
+        .to(InventoryService.class);
 
+      bind(IInventoryRepository.class)
+        .to(InventoryRepository.class);
 
+      bind(ProductsCsvDao.class);
     }
 
     @Provides
