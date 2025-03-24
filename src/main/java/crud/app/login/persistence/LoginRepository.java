@@ -2,8 +2,10 @@ package crud.app.login.persistence;
 
 import com.google.inject.Inject;
 
+import crud.app.login.domain_services.IUserCSVSerializer;
 import crud.app.login.dtos.IAuthSession;
 import crud.app.login.dtos.IAuthUser;
+import crud.shared.persistence.dao.UserCsvDAO;
 
 public class LoginRepository implements ILoginRepository {
   private UserCsvDAO userCsvDAO;
@@ -17,12 +19,16 @@ public class LoginRepository implements ILoginRepository {
 
   @Override
   public IAuthUser getUserByUserName(String username) throws Exception {
-    return this.userCsvDAO.getUserByUserName(username);
+    return IUserCSVSerializer
+      .INSTANCE
+      .toDTO(this.userCsvDAO.getUserByUserName(username));
   }
 
   @Override
   public IAuthUser getUserById(String id) throws Exception {
-    return this.userCsvDAO.getUserById(id);
+    return IUserCSVSerializer
+      .INSTANCE
+      .toDTO(this.userCsvDAO.getUserById(id));
   }
 
   @Override
