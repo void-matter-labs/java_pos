@@ -1,0 +1,42 @@
+#inventoryMain {
+  -fx-background-color: -color-bg-main;
+  -fx-padding: 12px;
+}
+
+#itemContainer .viewport, #itemFlowPane .viewport{
+  -fx-background-color: -color-bg-main;
+}
+
+#itemContainer, #itemFlowPane{
+  -fx-border-width: 0;
+}
+
+#itemFlowPane{
+  -fx-padding: 24px;
+}
+
+FxInventoryItem {
+  -fx-background-color: -color-bg-input-primary;
+  -fx-border-radius: 16px;
+  -fx-background-radius: 16px;
+  -fx-cursor: hand;
+  -fx-padding: 12px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+  -fx-transition: all 0.2s ease-in-out;
+}
+
+FxInventoryItem:hover {
+  -fx-background-color: -color-bg-input-primary-hover;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0, 0, 3);
+}
+
+FxInventoryItem:active {
+  -fx-background-color: -color-bg-input-primary-focused;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 2, 0, 0, 1);
+}
+
+FxInventoryItem > Label {
+  -fx-text-fill: -color-fg-main;
+  -fx-font-family: "Arial", sans-serif;
+  -fx-font-size: 16px;
+}
