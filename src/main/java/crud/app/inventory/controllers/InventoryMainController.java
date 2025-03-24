@@ -36,7 +36,7 @@ public class InventoryMainController {
   }
 
   @FXML
-  public void initialize() {
+  public void initialize() throws Exception {
     loadInventoryItems();
 
     searchBar.textProperty().addListener((observable, oldValue, newValue) -> debounceSearch(newValue));
@@ -55,8 +55,8 @@ public class InventoryMainController {
       .toList();
   }
 
-  private void loadInventoryItems(Predicate<IInventoryItem> query) {
-    List<IInventoryItem> items = inventoryService.getItemsByFilter(query);
+  private void loadInventoryItems(String query) throws Exception {
+    List<IInventoryItem> items = inventoryService.searchItemsByContent(query);
     List<FxInventoryItem> fxItems = transformToFxItems(items);
 
     itemFlowPane.getChildren().clear();
@@ -67,7 +67,7 @@ public class InventoryMainController {
     }
   }
 
-  private void loadInventoryItems() {
+  private void loadInventoryItems() throws Exception {
     List<IInventoryItem> items = inventoryService.getAllItems();
     List<FxInventoryItem> fxItems = transformToFxItems(items);
 
@@ -89,11 +89,13 @@ public class InventoryMainController {
       @Override
       public void run() {
         javafx.application.Platform.runLater(
-          () -> loadInventoryItems(item-> {
-            String lowerCasedQuery = query.toLowerCase();
-            return item.getName().toLowerCase().contains(lowerCasedQuery)
-              || item.getDescription().toLowerCase().contains(lowerCasedQuery);
-          })
+          () -> {
+            try {
+              loadInventoryItems(query.toLowerCase());
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+          }
         );
       }
     }, 300); // 300ms debounce delay
