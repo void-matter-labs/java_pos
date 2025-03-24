@@ -5,8 +5,12 @@ import java.util.List;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
+import crud.app.sidebar.components.FxCustomButton;
 import crud.app.sidebar.dtos.ButtonConfig;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class SidebarModule extends AbstractModule {
     @Override
@@ -24,7 +28,11 @@ public class SidebarModule extends AbstractModule {
     }
 
     @Provides
-    public String provideSelectedButtonId() {
-        return "button1";
+    @Singleton
+    public EventHandler<MouseEvent> provideClickHandler() {
+      return event -> {
+        FxCustomButton item = (FxCustomButton) event.getSource();
+        System.out.println("Mouse clicked on: " + item.getCustomId());
+      };
     }
 }
