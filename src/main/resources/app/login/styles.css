@@ -9,27 +9,11 @@ Label {
   -fx-font-weight: bold;
 }
 
-TextField, PasswordField {
-  -fx-background-color: -color-bg-input-primary;
-  -fx-text-fill: -color-fg-input-primary;
-  -fx-border-color: -color-border-input-primary;
-  -fx-border-radius: 5px;
-  -fx-background-radius: 5px;
-  -fx-padding: 10px;
-  -fx-font-family: "Arial", sans-serif;
-  -fx-font-size: 18px;
-  -fx-font-weight: bold;
-}
 
-TextField:focused, PasswordField:focused {
-  -fx-border-color: #f63e72;
-  -fx-border-width: 2px;
-  -fx-effect: dropshadow(gaussian, #665bda, 10, 0.5, 0, 0);
-}
 
 Button {
-  -fx-background-color: #497ed3;
-  -fx-text-fill: #1e1e2e;
+  -fx-background-color: -color-bg-button-primary;
+  -fx-text-fill: -color-fg-button-primary;
   -fx-font-family: "Arial", sans-serif;
   -fx-font-size: 18px;
   -fx-font-weight: bold;
@@ -41,14 +25,14 @@ Button {
 }
 
 Button:hover {
-  -fx-background-color: #ac2bb1;
-  -fx-effect: dropshadow(gaussian, #f38ba8, 10, 0.5, 0, 0);
+  -fx-background-color: -color-bg-button-primary-hover;
+  -fx-effect: dropshadow(gaussian, -color-shadow-button-primary, 10, 0.5, 0, 0);
 }
 
 Button:pressed {
-  -fx-background-color: #8f6cf7;
+  -fx-background-color: -color-bg-button-primary-pressed;
 }
 
 :focused {
-  -fx-effect: dropshadow(gaussian, #ac09c1, 10, 0.5, 0, 0);
+  -fx-effect: dropshadow(gaussian, -color-accent-purple, 10, 0.5, 0, 0);
 }
