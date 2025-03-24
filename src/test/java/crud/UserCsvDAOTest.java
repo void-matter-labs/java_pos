@@ -15,7 +15,8 @@ import static org.mockito.Mockito.when;
 import java.io.StringReader;
 
 import crud.app.login.dtos.IAuthUser;
-import crud.app.login.persistence.UserCsvDAO;
+import crud.shared.dto.UserCsvDTO;
+import crud.shared.persistence.dao.UserCsvDAO;
 import crud.shared.persistence.datasource.ICSVConnectionManager;
 import crud.shared.persistence.datasource.IReaderAction;
 
@@ -30,12 +31,12 @@ class UserCsvDAOTest {
 
   @Test
   void getsUser() throws Exception {
-    ICSVConnectionManager csvConnectionManager = mock(ICSVConnectionManager.class);
+    csvConnectionManager = mock(ICSVConnectionManager.class);
 
     String fakeCsvData = """
-        id,username,password
-        1,johndoe,secret123
-        2,janedoe,password456
+        id,username,password,last_name,first_name
+        1,johndoe,secret123,doe,john
+        2,janedoe,password456,doe,jane
         """;
 
     when(csvConnectionManager.executeWithReader(eq("users"), any()))
@@ -48,7 +49,7 @@ class UserCsvDAOTest {
 
     UserCsvDAO userCsvDAO = new UserCsvDAO(csvConnectionManager);
 
-    IAuthUser user = userCsvDAO.getUserByUserName("johndoe");
+    UserCsvDTO user = userCsvDAO.getUserByUserName("johndoe");
 
     assertEquals("johndoe", user.getUsername());
     assertEquals("secret123", user.getPassword());

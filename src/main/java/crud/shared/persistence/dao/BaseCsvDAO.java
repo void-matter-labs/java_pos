@@ -1,4 +1,4 @@
-package crud.app.login.persistence;
+package crud.shared.persistence.dao;
 
 import crud.shared.persistence.datasource.ICSVConnectionManager;
 import crud.shared.persistence.datasource.IReaderAction;
@@ -13,7 +13,7 @@ public abstract class BaseCsvDAO {
     this.tableName = this.getTableName();
   }
 
-  abstract String getTableName();
+  protected abstract  String getTableName();
 
   protected  <T> T executeWithReader(IReaderAction<T> action) throws Exception{
     return this.csvConnectionManager.executeWithReader(tableName, action);

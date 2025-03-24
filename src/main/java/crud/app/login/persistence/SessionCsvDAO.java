@@ -3,6 +3,7 @@ package crud.app.login.persistence;
 import com.google.inject.Inject;
 
 import crud.app.login.dtos.IAuthSession;
+import crud.shared.persistence.dao.BaseCsvDAO;
 import crud.shared.persistence.datasource.ICSVConnectionManager;
 
 public class SessionCsvDAO extends BaseCsvDAO{
@@ -12,7 +13,7 @@ public class SessionCsvDAO extends BaseCsvDAO{
   }
 
   @Override
-  String getTableName() {
+  protected String getTableName() {
     return "sessions";
   }
 
