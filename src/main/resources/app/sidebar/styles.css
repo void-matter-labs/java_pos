@@ -1,30 +1,39 @@
 /* Styles for sidebar */
 .root {
-    -fx-background-color: white;
+    -fx-background-color: #1F1D2B;
+}
+
+.sidebar-container {
+    -fx-background-color: #1F1D2B;
+    -fx-spacing: 15px;
+    -fx-padding: 20px 10px;
+    -fx-alignment: center;
+    -fx-min-width: 160px;
+    -fx-pref-width: 180px;
+    -fx-min-height: 500px;
 }
 
 .base-button {
-    -fx-background-color: -color-bg-button-primary;
-    -fx-text-fill: -color-fg-button-primary;
-    -fx-border-color: -color-border-button-primary;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
     -fx-font-family: "Arial", sans-serif;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
+    -fx-padding: 15px 20px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
     -fx-cursor: hand;
+    -fx-min-width: 150px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 0);
+}
+
+.base-button:hover {
+    -fx-background-color: rgba(234, 124, 105, 0.3);
 }
 
 .base-button-active {
-    -fx-background-color: -color-bg-button-secondary;
-    -fx-text-fill: -color-fg-button-secondary;
-    -fx-border-color: -color-border-button-secondary;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-font-family: "Arial", sans-serif;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
+    -fx-background-color: #EA7C69;
+    -fx-text-fill: white;
+    -fx-border-color: #EA7C69;
+    -fx-effect: dropshadow(gaussian, rgba(234, 124, 105, 0.5), 8, 0, 0, 0);
 }

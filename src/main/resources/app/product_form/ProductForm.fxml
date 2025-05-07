@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox 
+  xmlns:fx="http://javafx.com/fxml"
+  fx:controller="crud.app.product_form.controllers.ProductFormMainController"
+  spacing="15"
+  stylesheets="@styles.css"
+  fx:id="productFormRoot"
+  alignment="CENTER"
+>
+  <padding>
+    <Insets top="20" right="20" bottom="20" left="20"/>
+  </padding>
+  
+  <Label text="Agregar Nuevo Producto" styleClass="form-title"/>
+  
+  <GridPane hgap="15" vgap="15" alignment="CENTER">
+    <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+    <TextField fx:id="idField" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Ej: PRD001" />
+    
+    <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <TextField fx:id="nameField" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Nombre del producto" />
+    
+    <Label text="Descripción:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+    <TextField fx:id="descriptionField" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Descripción corta" />
+    
+    <Label text="Precio:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+    <TextField fx:id="priceField" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Ej: 99.99" />
+    
+    <Label text="Categoría:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+    <ComboBox fx:id="categoryComboBox" GridPane.rowIndex="4" GridPane.columnIndex="1" promptText="Seleccione categoría" />
+    
+    <Label text="Cantidad:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+    <TextField fx:id="quantityField" GridPane.rowIndex="5" GridPane.columnIndex="1" promptText="Ej: 100" />
+  </GridPane>
+  
+  <Button 
+    text="Guardar Producto" 
+    fx:id="saveButton" 
+    onMouseClicked="#handleSaveClick"
+    styleClass="save-button"
+  />
+  
+  <Label fx:id="statusLabel" styleClass="status-label" />
+</VBox>

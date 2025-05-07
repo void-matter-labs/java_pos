@@ -1,0 +1,52 @@
+/* Styles for product_form */
+.root {
+    -fx-background-color: -color-bg-main;
+}
+
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text-title;
+    -fx-padding: 0 0 20px 0;
+}
+
+.save-button {
+    -fx-background-color: #EA7C69;
+    -fx-text-fill: white;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 24px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-min-width: 200px;
+}
+
+.save-button:hover {
+    -fx-background-color: derive(#EA7C69, -10%);
+    -fx-effect: dropshadow(gaussian, rgba(234, 124, 105, 0.5), 8, 0, 0, 0);
+}
+
+.save-button:pressed {
+    -fx-background-color: derive(#EA7C69, -20%);
+}
+
+.status-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #4CAF50;
+    -fx-padding: 10px;
+}
+
+GridPane {
+    -fx-alignment: center;
+}
+
+Label {
+    -fx-text-fill: -color-fg-main;
+    -fx-font-size: 16px;
+}
+
+TextField, ComboBox {
+    -fx-min-width: 250px;
+}

@@ -40,6 +40,24 @@ public class InventoryMainController {
     loadInventoryItems();
 
     searchBar.textProperty().addListener((observable, oldValue, newValue) -> debounceSearch(newValue));
+    
+    itemFlowPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+      if (newScene != null) {
+        newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
+          if (newWindow != null) {
+            newWindow.focusedProperty().addListener((obsFocus, oldFocus, newFocus) -> {
+              if (newFocus) {
+                try {
+                  loadInventoryItems();
+                } catch (Exception e) {
+                  logger.severe("Error al recargar inventario: " + e.getMessage());
+                }
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   private List<FxInventoryItem> transformToFxItems(List<IInventoryItem> items) {
@@ -99,5 +117,14 @@ public class InventoryMainController {
         );
       }
     }, 300); // 300ms debounce delay
+  }
+  
+  // Método público para forzar una actualización
+  public void refreshInventory() {
+    try {
+      loadInventoryItems();
+    } catch (Exception e) {
+      logger.severe("Error al refrescar inventario: " + e.getMessage());
+    }
   }
 }
