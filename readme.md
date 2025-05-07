@@ -13,7 +13,7 @@ gradle dev -Pmodule=your_feature_name
 Provided that we have `java/crud/app/your_feature_name/YourFeatureNameModule.java` module class
 and a resources/your_feature_name/YourFeatureName.fxml view
 
-If your feature does not comply with this convention or does not exist
+If your feature does not comply with this convention or does not exis
 an exception is going to be thrown
 
 The new structure is going to be a modular monolith,
