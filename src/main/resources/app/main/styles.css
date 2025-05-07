@@ -1,0 +1,13 @@
+/* Styles for main */
+.root {
+    -fx-background-color: -color-bg-main;
+}
+
+#mainContainer {
+    -fx-background-color: -color-bg-main;
+}
+
+#contentArea {
+    -fx-background-color: -color-bg-main;
+    -fx-padding: 20px;
+}

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.google.inject.Inject;
 
@@ -23,6 +24,8 @@ public class SidebarMainController {
   private List<FxCustomButton> buttons;
 
   private EventHandler<MouseEvent> clickHandler;
+  
+  private Consumer<String> customClickHandler;
 
   @Inject
   public SidebarMainController(List<ButtonConfig> buttonConfigs, EventHandler<MouseEvent> clickHandler) {
@@ -42,6 +45,11 @@ public class SidebarMainController {
     this.activeButton = newActiveButton;
 
     newActiveButton.setActive(true);
+  }
+  
+  // Nuevo método para establecer un manejador de clics personalizado
+  public void setCustomClickHandler(Consumer<String> customClickHandler) {
+    this.customClickHandler = customClickHandler;
   }
 
   private List<FxCustomButton> transformToFxCustomButton() {
@@ -77,7 +85,13 @@ public class SidebarMainController {
   private void handleButtonClick(MouseEvent event) {
     FxCustomButton newActiveButton = (FxCustomButton) event.getSource();
     setActiveButton(newActiveButton);
-
-    clickHandler.handle(event);
+    
+    // Si hay un manejador personalizado, usarlo en lugar del predeterminado
+    if (customClickHandler != null) {
+      customClickHandler.accept(newActiveButton.getCustomId());
+    } else {
+      // De lo contrario, usar el manejador predeterminado
+      clickHandler.handle(event);
+    }
   }
 }

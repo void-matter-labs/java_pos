@@ -8,6 +8,6 @@
   fx:controller="crud.app.sidebar.controllers.SidebarMainController"
   fx:id="sidebar"
   stylesheets="@styles.css"
+  styleClass="sidebar-container"
 >
-  <Label text="Hello, World!"/>
 </VBox>
