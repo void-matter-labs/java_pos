@@ -1,0 +1,30 @@
+/* Styles for sidebar */
+.root {
+    -fx-background-color: white;
+}
+
+.base-button {
+    -fx-background-color: -color-bg-button-primary;
+    -fx-text-fill: -color-fg-button-primary;
+    -fx-border-color: -color-border-button-primary;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.base-button-active {
+    -fx-background-color: -color-bg-button-secondary;
+    -fx-text-fill: -color-fg-button-secondary;
+    -fx-border-color: -color-border-button-secondary;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
